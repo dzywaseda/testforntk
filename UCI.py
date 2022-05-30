@@ -25,7 +25,7 @@ alg = tools.svm
 avg_acc_list = []
 outf = open(args.file, "w")
 print ("Dataset\tValidation Acc\tTest Acc", file = outf)
-for idx, dataset in enumerate(sorted(os.listdir(datadir))):
+for idx, dataset in enumerate(sorted(os.listdir(datadir)[1:])):
     if not os.path.isdir(datadir + "/" + dataset):
         continue
     if not os.path.isfile(datadir + "/" + dataset + "/" + dataset + ".txt"):
@@ -69,7 +69,7 @@ for idx, dataset in enumerate(sorted(os.listdir(datadir))):
     for dep in DEP_LIST:
         for fix_dep in range(dep + 1):
             K = Ks[dep][fix_dep]
-            print("select item",np.mean(T[dep][fix_dp]))
+            print("select item",dep,fix_dep, np.mean(T[dep][fix_dep]))
             for value in C_LIST:
                 acc = alg(K[train_fold][:, train_fold], K[val_fold][:, train_fold], y[train_fold], y[val_fold], value, c)
                 if acc > best_acc:
@@ -79,7 +79,7 @@ for idx, dataset in enumerate(sorted(os.listdir(datadir))):
                     best_fix = fix_dep
     
     K = Ks[best_dep][best_fix]
-    print("best item)
+    print("best item")
     print(np.mean(T[best_dep][best_fix]))
     
     print ("best acc:", best_acc, "\tC:", best_value, "\tdep:", best_dep, "\tfix:", best_fix)
