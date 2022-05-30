@@ -25,7 +25,9 @@ alg = tools.svm
 avg_acc_list = []
 outf = open(args.file, "w")
 print ("Dataset\tValidation Acc\tTest Acc", file = outf)
-for idx, dataset in enumerate(sorted(os.listdir(datadir)[1:])):
+lists = os.listdir(datadir)
+sorted(lists)
+for idx, dataset in enumerate(lists[2:]):
     if not os.path.isdir(datadir + "/" + dataset):
         continue
     if not os.path.isfile(datadir + "/" + dataset + "/" + dataset + ".txt"):
