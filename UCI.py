@@ -55,7 +55,7 @@ for idx, dataset in enumerate(sorted(os.listdir(datadir))):
     y = np.asarray(list(map(lambda x: int(x.split()[-1]), f)))
     
     # calculate NTK
-    Ks = NTK.kernel_value_batch(X, MAX_DEP)
+    Ks, T  = NTK.kernel_value_batch(X, MAX_DEP)
         
     # load training and validation set
     fold = list(map(lambda x: list(map(int, x.split())), open(datadir + "/" + dataset + "/" + "conxuntos.dat", "r").readlines()))
@@ -69,6 +69,7 @@ for idx, dataset in enumerate(sorted(os.listdir(datadir))):
     for dep in DEP_LIST:
         for fix_dep in range(dep + 1):
             K = Ks[dep][fix_dep]
+            print("select item",np.mean(T[dep][fix_dp]))
             for value in C_LIST:
                 acc = alg(K[train_fold][:, train_fold], K[val_fold][:, train_fold], y[train_fold], y[val_fold], value, c)
                 if acc > best_acc:
@@ -78,6 +79,8 @@ for idx, dataset in enumerate(sorted(os.listdir(datadir))):
                     best_fix = fix_dep
     
     K = Ks[best_dep][best_fix]
+    print("best item)
+    print(np.mean(T[best_dep][best_fix]))
     
     print ("best acc:", best_acc, "\tC:", best_value, "\tdep:", best_dep, "\tfix:", best_fix)
     
