@@ -2,10 +2,10 @@ import math
 import numpy as np
 # return an array K of size (d_max, d_max, N, N), K[i][j] is kernel value of depth i + 1 with first j layers fixed 
 def kernel_value_batch(X, d_max): 
-    mid = 1
     K = np.zeros((d_max, d_max, X.shape[0], X.shape[0]))
     Ktestfy = np.zeros((d_max, d_max, X.shape[0], X.shape[0]))
     for fix_dep in range(d_max):
+        mid = 1
         S = np.matmul(X, X.T)
         H = np.zeros_like(S)
         for dep in range(d_max):
@@ -19,9 +19,10 @@ def kernel_value_batch(X, d_max):
             H = H * (math.pi - np.arccos(Sn)) / 2.0 / math.pi
             if mid == 1:
                 Ktestfy[dep][fix_dep] = (math.pi - np.arccos(Sn)) / 2.0 / math.pi
+                mid = mid + 1
             else:
-                Ktestfy[dep][fix_dep] = testfty + np.dot(mid,S)
-            mid = (Sn * (math.pi - np.arccos(Sn)) + np.sqrt(1.0 - Sn * Sn)) * P / 2.0 / math.pi
+                Ktestfy[dep][fix_dep] = Ktestfy[dep][fix_dep] + np.dot(midd,S)
+            midd = (Sn * (math.pi - np.arccos(Sn)) + np.sqrt(1.0 - Sn * Sn)) * P / 2.0 / math.pi
             
     return K,Ktestfy
 
