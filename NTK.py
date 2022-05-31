@@ -17,12 +17,13 @@ def kernel_value_batch(X, d_max):
             Sn = np.clip(S / P, a_min = -1, a_max = 1)
             S = (Sn * (math.pi - np.arccos(Sn)) + np.sqrt(1.0 - Sn * Sn)) * P / 2.0 / math.pi
             H = H * (math.pi - np.arccos(Sn)) / 2.0 / math.pi
-            if mid == 1:
-                Ktestfy[dep][fix_dep] = (math.pi - np.arccos(Sn)) / 2.0 / math.pi
-                mid = mid + 1
-            else:
-                Ktestfy[dep][fix_dep] = Ktestfy[dep][fix_dep] + np.dot(midd,S)
-            midd = (Sn * (math.pi - np.arccos(Sn)) + np.sqrt(1.0 - Sn * Sn)) * P / 2.0 / math.pi
+            if fix_dep > dep:
+                if mid == 1:
+                    Ktestfy[dep][fix_dep] = (math.pi - np.arccos(Sn)) / 2.0 / math.pi
+                    mid = mid + 1
+                else:
+                    Ktestfy[dep][fix_dep] = Ktestfy[dep][fix_dep] + np.dot(midd,S)
+                midd = (Sn * (math.pi - np.arccos(Sn)) + np.sqrt(1.0 - Sn * Sn)) * P / 2.0 / math.pi
             
     return K,Ktestfy
 
